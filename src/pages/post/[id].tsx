@@ -2,10 +2,12 @@ import CommentBox from "@/components/CommentBox";
 import CommentCard from "@/components/CommentCard";
 import Layout from "@/components/Layout";
 import { IComment, IPost } from "@/utils/interfaces";
+import { FavoritesContext } from "@/utils/states/FavoritesContext";
 import { MyUserProfileContext } from "@/utils/states/MyUserProfileContext";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 function Index() {
   const [post, setPost] = useState<IPost>();
@@ -18,6 +20,17 @@ function Index() {
   const handleCommentChange = (e: any) => {
     setCommentText(e.target.value);
   };
+
+  const favoritesContext = useContext(FavoritesContext);
+
+  if (!favoritesContext) {
+    throw new Error("Post must be used within a FavoritesProvider");
+  }
+
+  const { favoritePosts, toggleFavorite } = favoritesContext;
+  const isFavorite = favoritePosts.some(
+    (favPost) => favPost.id == parseInt(router.query.id as string)
+  );
 
   const fetchComments = async () => {
     try {
@@ -82,7 +95,20 @@ function Index() {
   return (
     <Layout>
       <div className="max-3-md py-5">
-        <h2 className="font-bold text-4xl">{post?.title}</h2>
+        <div className="flex flex-row justify-between items-center">
+          <h2 className="font-bold text-4xl">{post?.title}</h2>
+          {isFavorite ? (
+            <FaHeart
+              onClick={() => toggleFavorite(post!)}
+              className="text-2xl text-red-600 cursor-pointer"
+            />
+          ) : (
+            <FaRegHeart
+              onClick={() => toggleFavorite(post!)}
+              className="text-2xl text-red-600 cursor-pointer"
+            />
+          )}
+        </div>
         <p className="mt-10 text-3xl">{post?.body}</p>
         <p className="mt-10 text-3xl">Author: {post?.authorId}</p>
         <div className="mt-6">
