@@ -1,27 +1,29 @@
-import React from "react";
+import { MyUserProfileContext } from "@/utils/states/MyUserProfileContext";
+import { useContext } from "react";
 
 function Header() {
+  const personalProfile = useContext(MyUserProfileContext);
+
   return (
     <div className="navbar bg-black">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl text-white">Posts App</a>
       </div>
-      <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            className="inline-block w-5 h-5 stroke-current"
+      <div className="flex-none gap-2">
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-            ></path>
-          </svg>
-        </button>
+            <div className="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                src={personalProfile?.personalProfile?.imageUrl}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
