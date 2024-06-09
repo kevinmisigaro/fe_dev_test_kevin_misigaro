@@ -26,6 +26,8 @@ export default function handler(
 ) {
   if (req.method === 'POST') {
     const { text, profileId } = req.body;
+    console.log(text);
+    
     const postId = parseInt(req.query.id as string);
     const newComment = { postId, text, profileId };
     comments.push(newComment);
