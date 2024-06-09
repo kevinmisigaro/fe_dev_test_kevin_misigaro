@@ -1,6 +1,8 @@
+import BackButton from "@/components/BackButton";
 import CommentBox from "@/components/CommentBox";
 import CommentCard from "@/components/CommentCard";
 import Layout from "@/components/Layout";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { IComment, IPost } from "@/utils/interfaces";
 import { FavoritesContext } from "@/utils/states/FavoritesContext";
 import { MyUserProfileContext } from "@/utils/states/MyUserProfileContext";
@@ -95,37 +97,44 @@ function Index() {
   return (
     <Layout>
       <div className="max-3-md py-5">
-        <div className="flex flex-row justify-between items-center">
-          <h2 className="font-bold text-4xl">{post?.title}</h2>
-          {isFavorite ? (
-            <FaHeart
-              onClick={() => toggleFavorite(post!)}
-              className="text-2xl text-red-600 cursor-pointer"
-            />
-          ) : (
-            <FaRegHeart
-              onClick={() => toggleFavorite(post!)}
-              className="text-2xl text-red-600 cursor-pointer"
-            />
-          )}
-        </div>
-        <p className="mt-10 text-3xl">{post?.body}</p>
-        <p className="mt-10 text-3xl">Author: {post?.authorId}</p>
-        <div className="mt-6">
-          <h5 className="text-2xl">Comments</h5>
+        <BackButton />
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <div className="flex flex-row justify-between items-center">
+              <h2 className="font-bold text-4xl">{post?.title}</h2>
+              {isFavorite ? (
+                <FaHeart
+                  onClick={() => toggleFavorite(post!)}
+                  className="text-2xl text-red-600 cursor-pointer"
+                />
+              ) : (
+                <FaRegHeart
+                  onClick={() => toggleFavorite(post!)}
+                  className="text-2xl text-red-600 cursor-pointer"
+                />
+              )}
+            </div>
+            <p className="mt-10 text-3xl">{post?.body}</p>
+            <p className="mt-10 text-3xl">Author: {post?.authorId}</p>
+            <div className="mt-6">
+              <h5 className="text-2xl">Comments</h5>
 
-          <CommentBox
-            str={commentText}
-            updateFn={handleCommentChange}
-            submitBtn={submitComment}
-          />
+              <CommentBox
+                str={commentText}
+                updateFn={handleCommentChange}
+                submitBtn={submitComment}
+              />
 
-          <div className="flex flex-col gap-y-2 mt-3">
-            {comments.map((comment, index) => (
-              <CommentCard key={index} comment={comment} />
-            ))}
-          </div>
-        </div>
+              <div className="flex flex-col gap-y-2 mt-3">
+                {comments.map((comment, index) => (
+                  <CommentCard key={index} comment={comment} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </Layout>
   );

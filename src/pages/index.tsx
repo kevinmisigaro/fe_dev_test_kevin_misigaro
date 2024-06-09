@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import PostCard from "@/components/PostCard";
 import SearchBox from "@/components/SearchBox";
 import { IPost } from "@/utils/interfaces";
@@ -52,13 +53,11 @@ export default function Home() {
       <h3 className="text-3xl font-bold text-center">Cars Posts</h3>
 
       <div className="flex flex-row justify-center my-4">
-        <SearchBox str={searchText} updateFn={handleSearchTextChange} />
+        <SearchBox updateFn={handleSearchTextChange} />
       </div>
 
       {loading ? (
-        <div>
-          <span className="loading loading-bars loading-lg"></span>
-        </div>
+        <LoadingSpinner />
       ) : (
         <div className="grid grid-cols-1 my-2">
           {filteredPosts.map((post) => (

@@ -1,8 +1,6 @@
 const SearchBox = ({
-  str,
   updateFn,
 }: {
-  str: string;
   updateFn: (e: any) => void;
 }) => {
   return (
