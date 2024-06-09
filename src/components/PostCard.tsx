@@ -1,4 +1,5 @@
 import { IPost } from "@/utils/interfaces";
+import Link from "next/link";
 
 function PostCard({ post }: { post: IPost }) {
   return (
@@ -7,7 +8,9 @@ function PostCard({ post }: { post: IPost }) {
         <h2 className="card-title">{post.title}</h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Read more</button>
+          <Link href={`/post/${post.id}`} className="btn btn-primary">
+            Read more
+          </Link>
         </div>
       </div>
     </div>
